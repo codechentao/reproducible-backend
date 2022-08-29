@@ -1,0 +1,12 @@
+"aggregations":
+{"task_start_time":
+  {"date_histogram":
+    {"field":"task_start_time",
+    "format":"yyyy-MM-dd",
+    "time_zone":"GMT+08:00",
+    "interval":"1d","offset":0,
+    "order":{"_key":"asc"},
+    "keyed":false,"min_doc_count":0},
+    "aggregations":
+{"test_status":
+{"terms":{"field":"test_status","size":10000,"min_doc_count":1,"shard_min_doc_count":0,"show_term_doc_count_error":false,"order":[{"_count":"desc"},{"_key":"asc"}]}}}}}}}
