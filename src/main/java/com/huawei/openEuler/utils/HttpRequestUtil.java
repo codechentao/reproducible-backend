@@ -1,6 +1,10 @@
 package com.huawei.openEuler.utils;
 
-import okhttp3.*;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,13 +30,13 @@ public class HttpRequestUtil {
         Response response = null;
         try {
             Request request = new Request.Builder()
-                    .url(url)
-                    .method("GET", null)
-                    .build();
+                .url(url)
+                .method("GET", null)
+                .build();
             OkHttpClient client = new OkHttpClient().newBuilder()
-                    .connectTimeout(60, TimeUnit.SECONDS)
-                    .readTimeout(60, TimeUnit.SECONDS)
-                    .build();
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .build();
             response = client.newCall(request).execute();
         } catch (IOException e) {
             logger.info(e.getMessage());
@@ -43,7 +47,7 @@ public class HttpRequestUtil {
     /**
      * post
      *
-     * @param url url
+     * @param url  url
      * @param body body
      * @return Response
      */
@@ -51,11 +55,11 @@ public class HttpRequestUtil {
         Response response = null;
         try {
             Request request = new Request.Builder()
-                    .url(url)
-                    .method("POST", RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), body))
-                    .build();
+                .url(url)
+                .method("POST", RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), body))
+                .build();
             OkHttpClient client = new OkHttpClient().newBuilder().readTimeout(60, TimeUnit.MINUTES)
-                    .callTimeout(60, TimeUnit.MINUTES).build();
+                .callTimeout(60, TimeUnit.MINUTES).build();
             response = client.newCall(request).execute();
         } catch (IOException e) {
             logger.info(e.getMessage());

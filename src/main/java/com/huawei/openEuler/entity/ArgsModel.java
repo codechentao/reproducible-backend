@@ -8,7 +8,7 @@ import lombok.Data;
  *
  * @author zhangshengjie
  * @since 2022-5-27
- * */
+ */
 @Data
 @AllArgsConstructor
 public class ArgsModel {

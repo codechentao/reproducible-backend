@@ -19,21 +19,21 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author zhangshengjie
  * @since 2022-5-27
-* */
+ */
 @Configuration
 public class EsConfig {
     protected final static Logger logger = LoggerFactory.getLogger(EsConfig.class);
 
     @Bean(destroyMethod = "close")
-    public RestHighLevelClient client(){
+    public RestHighLevelClient client() {
         logger.debug(ConstantUtils.LOGGER_CONNECT_TRY);
         RestHighLevelClient restClint = null;
-        try{
+        try {
             HttpHost host = new HttpHost(ConstantUtils.HOST_IP, ConstantUtils.HOST_PORT, ConstantUtils.HOST_SCHEME);
             RestClientBuilder builder = RestClient.builder(host);
             CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
             credentialsProvider.setCredentials(
-                    AuthScope.ANY, new UsernamePasswordCredentials(ConstantUtils.HOST_USER, ConstantUtils.HOST_PASSWORD));
+                AuthScope.ANY, new UsernamePasswordCredentials(ConstantUtils.HOST_USER, ConstantUtils.HOST_PASSWORD));
             builder.setHttpClientConfigCallback(f -> {
                 f.setDefaultCredentialsProvider(credentialsProvider);
                 f.setKeepAliveStrategy((response, context) -> 1000 * 60);
@@ -41,8 +41,8 @@ public class EsConfig {
             });
             restClint = new RestHighLevelClient(builder);
             logger.debug(ConstantUtils.LOGGER_CONNECT_SUCCESS);
-        }catch (Exception e){
-            logger.error(ConstantUtils.LOGGER_CONNECT_FAILED,e);
+        } catch (Exception e) {
+            logger.error(ConstantUtils.LOGGER_CONNECT_FAILED, e);
         }
         return restClint;
     }
