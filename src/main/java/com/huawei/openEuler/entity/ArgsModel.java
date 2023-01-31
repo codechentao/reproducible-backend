@@ -16,4 +16,6 @@ public class ArgsModel {
     String term2;
     String architectures;
     String testSuites;
+    Integer pageSize;
+    Integer pageNum;
 }

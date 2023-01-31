@@ -26,10 +26,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -74,7 +76,7 @@ public class EsObsService {
         SearchResponse response = client.search(searchRequest, RequestOptions.DEFAULT);
         SearchHit[] hits = response.getHits().getHits();
         List<DetailTable> list = new ArrayList<>();
-        ProjectUtils.parseHits(hits, list, PROJECT_PATH, argsModel);
+        ProjectUtils.parseHits(hits, list, PROJECT_PATH);
         return list;
     }
 
@@ -83,7 +85,7 @@ public class EsObsService {
      *
      * @return list
      */
-    public HashMap<String, Object> select(String key1, ArgsModel argsModel, String key2, int type, String index, Integer pageNum, Integer pageSize) throws IOException {
+    public HashMap<String, Object> select(String key1, ArgsModel argsModel, String key2, int type, String index) throws IOException {
         // 指定索引，类似于数据库的表
         SearchRequest searchRequest = new SearchRequest(index);
         // 创建查询对象，相当于写查询sql
@@ -112,11 +114,14 @@ public class EsObsService {
                 .must(QueryBuilders.matchQuery(ConstantUtils.UPSTREAM_BRANCH, argsModel.getTestSuites())));
         }
         // 需要查出的总记录条数
-        searchSourceBuilder.from((pageNum - 1) * pageSize);
-        searchSourceBuilder.size(pageSize);
+        HashMap<String, Object> map = new HashMap<>();
+        if (Objects.isNull(argsModel.getPageSize()) || Objects.isNull(argsModel.getPageNum())) {
+            return map;
+        }
+        searchSourceBuilder.from((argsModel.getPageNum() - 1) * argsModel.getPageSize());
+        searchSourceBuilder.size(argsModel.getPageSize());
         searchRequest.source(searchSourceBuilder);
         SearchResponse response = client.search(searchRequest, RequestOptions.DEFAULT);
-        HashMap<String, Object> map = new HashMap<>();
         if (Objects.isNull(response.getHits())) {
             return map;
         }
@@ -124,7 +129,7 @@ public class EsObsService {
         map.put("total", total);
         SearchHit[] hits = response.getHits().getHits();
         List<DetailTable> list = new ArrayList<>();
-        ProjectUtils.parseHits(hits, list, PROJECT_PATH, argsModel);
+        ProjectUtils.parseHits(hits, list, PROJECT_PATH);
         map.put("data", list);
         return map;
     }

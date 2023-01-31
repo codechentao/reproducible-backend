@@ -48,18 +48,18 @@ public class EsObsController {
     }
 
     @RequestMapping("/select")
-    public Map<String, Object> select(@RequestBody ArgsModel argsModel, Integer pageNum, Integer pageSize) throws IOException {
+    public Map<String, Object> select(@RequestBody ArgsModel argsModel) throws IOException {
         String term1 = argsModel.getTerm1();
         String term2 = argsModel.getTerm2();
         logger.debug("select interface called");
         if (term1 != null && term2 != null) {
-            return service.select(ConstantUtils.TEST_STATUS, argsModel, ConstantUtils.CATEGORY_LEVEL, 3, INDEX_NAME_LATEST, pageNum, pageSize);
+            return service.select(ConstantUtils.TEST_STATUS, argsModel, ConstantUtils.CATEGORY_LEVEL, 3, INDEX_NAME_LATEST);
         } else if (term1 != null && term2 == null) {
-            return service.select(ConstantUtils.TEST_STATUS, argsModel, ConstantUtils.CATEGORY_LEVEL, 1, INDEX_NAME_LATEST, pageNum, pageSize);
+            return service.select(ConstantUtils.TEST_STATUS, argsModel, ConstantUtils.CATEGORY_LEVEL, 1, INDEX_NAME_LATEST);
         } else if (term1 == null && term2 != null) {
-            return service.select(ConstantUtils.TEST_STATUS, argsModel, ConstantUtils.CATEGORY_LEVEL, 2, INDEX_NAME_LATEST, pageNum, pageSize);
+            return service.select(ConstantUtils.TEST_STATUS, argsModel, ConstantUtils.CATEGORY_LEVEL, 2, INDEX_NAME_LATEST);
         } else {
-            return service.select(ConstantUtils.TEST_STATUS, argsModel, ConstantUtils.CATEGORY_LEVEL, 5, INDEX_NAME_LATEST, pageNum, pageSize);
+            return service.select(ConstantUtils.TEST_STATUS, argsModel, ConstantUtils.CATEGORY_LEVEL, 5, INDEX_NAME_LATEST);
         }
     }
 
@@ -119,8 +119,8 @@ public class EsObsController {
     }
 
     @RequestMapping("/selectAll")
-    public HashMap<String, Object> selectAll() throws IOException {
+    public HashMap<String, Object> selectAll(@RequestBody ArgsModel argsModel) throws IOException {
         logger.debug("selectAll api is called");
-        return service.select(ConstantUtils.TEST_STATUS, null, ConstantUtils.CATEGORY_LEVEL, 4, INDEX_NAME_ALL, 1, 10000);
+        return service.select(ConstantUtils.TEST_STATUS, argsModel, ConstantUtils.CATEGORY_LEVEL, 4, INDEX_NAME_ALL);
     }
 }
