@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  *
  * @author zhangshengjie
  * @since 2022-5-27
- * */
+ */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @EnableScheduling
 public class ReproducibleApplication {

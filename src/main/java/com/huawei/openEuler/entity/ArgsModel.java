@@ -8,7 +8,7 @@ import lombok.Data;
  *
  * @author zhangshengjie
  * @since 2022-5-27
- * */
+ */
 @Data
 @AllArgsConstructor
 public class ArgsModel {
@@ -16,4 +16,6 @@ public class ArgsModel {
     String term2;
     String architectures;
     String testSuites;
+    Integer pageSize;
+    Integer pageNum;
 }
