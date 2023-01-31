@@ -30,13 +30,9 @@ public class ConstantUtils {
 
     public static final String HOST_SCHEME = "http";
 
-    public static final String HOST_USER = "admin";
+    public static final String HOST_USER = System.getenv("HOST_USER");
 
-    public static final String HOST_PASSWORD = "X1iW@vfRSA42$";
-
-//    public static final String HOST_USER = System.getenv("HOST_USER");
-//
-//    public static final String HOST_PASSWORD = System.getenv("HOST_PASSWORD");
+    public static final String HOST_PASSWORD = System.getenv("HOST_PASSWORD");
 
     public static final String TEST_STATUS = "test_status";
 
