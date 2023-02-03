@@ -21,8 +21,8 @@ ENV PATH ${JAVA_HOME}/bin:$PATH
 
 # reproducible-backend
 RUN git clone https://github.com/opensourceways/reproducible-backend.git
-WORKDIR /reproducible
-RUN mvn clean install -s settings.xml
+WORKDIR /reproducible-backend/
+RUN mvn clean install -DskipTests -s settings.xml
 
 WORKDIR /usr/local
 RUN touch entrypoint.sh
