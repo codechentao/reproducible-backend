@@ -24,11 +24,21 @@ RUN git clone https://github.com/opensourceways/reproducible-backend.git
 WORKDIR /reproducible-backend/
 RUN mvn clean install -DskipTests -s settings.xml
 
+# install rasp.tgz
+WORKDIR /usr/local/
+ARG RASP_USER_NAME
+ARG RASP_PASSWORD
+RUN git clone  https://${RASP_USER_NAME}:${RASP_PASSWORD}@github.com/Open-Infra-Ops/plugins.git
+WORKDIR plugins/armorrasp/
+RUN tar -xzvf rasp.tgz -C /usr/local/
+RUN rm -r /usr/local/plugins/
+RUN chmod 755 -R /usr/local/rasp/
+
 WORKDIR /usr/local
 RUN touch entrypoint.sh
 RUN echo '#!/bin/bash' >> /usr/local/entrypoint.sh
 RUN echo 'HOST_USER=\$HOST_USER' >> /usr/local/entrypoint.sh
 RUN echo 'HOST_PASSWORD=\$HOST_PASSWORD' >> /usr/local/entrypoint.sh
-RUN sed -i "ajava -jar /root/.m2/repository/com/huawei/reproducible/0.0.1-SNAPSHOT/reproducible-0.0.1-SNAPSHOT.jar" /usr/local/entrypoint.sh
+RUN sed -i "ajava -javaagent:/usr/local/rasp/rasp.jar -jar /root/.m2/repository/com/huawei/reproducible/0.0.1-SNAPSHOT/reproducible-0.0.1-SNAPSHOT.jar" /usr/local/entrypoint.sh
 RUN chmod u+x /usr/local/entrypoint.sh
 ENTRYPOINT ["/usr/local/entrypoint.sh"]
