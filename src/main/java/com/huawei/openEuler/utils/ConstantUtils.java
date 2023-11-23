@@ -14,16 +14,6 @@ public class ConstantUtils {
 
     public static final String LOGGER_CONNECT_FAILED = "Connect elasticsearch failed";
 
-//    public static final String HOST_IP = "123.60.67.76";
-//
-//    public static final int HOST_PORT = 80;
-//
-//    public static final String HOST_SCHEME = "http";
-//
-//    public static final String HOST_USER = "root";
-//
-//    public static final String HOST_PASSWORD = "Helloman@12#$";
-
     public static final String HOST_IP = "123.60.15.242";
 
     public static final int HOST_PORT = 80;

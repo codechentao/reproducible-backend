@@ -27,12 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * service
@@ -47,6 +42,13 @@ public class EsService {
     private RestHighLevelClient client;
 
     private static final String PROJECT_PATH = "https://api.compass-ci.openeuler.org";
+
+//    public String write(ReproduciblePackageInfo rpi) throws IOException {
+//        IndexRequest indexRequest = new IndexRequest("latest-repo-reproducible-test");
+//        indexRequest.source(JSONObject.toJSONString(rpi), XContentType.JSON);
+//        IndexResponse indexResponse = client.index(indexRequest, RequestOptions.DEFAULT);
+//        return indexResponse.getId();
+//    }
 
     /**
      * 单条件搜索

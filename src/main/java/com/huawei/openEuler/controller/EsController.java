@@ -1,9 +1,11 @@
 package com.huawei.openEuler.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.huawei.openEuler.aop.UncaughtExceptionHandler;
 import com.huawei.openEuler.entity.ArgsModel;
 import com.huawei.openEuler.entity.DetailTable;
 import com.huawei.openEuler.entity.StatisticalTable;
+import com.huawei.openEuler.entity.index.ReproduciblePackageInfo;
 import com.huawei.openEuler.service.EsService;
 import com.huawei.openEuler.utils.ConstantUtils;
 import com.huawei.openEuler.utils.ProjectUtils;
@@ -11,16 +13,13 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 接口
@@ -30,6 +29,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/openEuler")
+@UncaughtExceptionHandler
 public class EsController {
     protected final static Logger logger = LoggerFactory.getLogger(EsController.class);
 
@@ -39,6 +39,11 @@ public class EsController {
 
     @Autowired(required = false)
     private EsService service;
+
+//    @PostMapping("/write")
+//    public String write(@RequestBody ReproduciblePackageInfo rpi) throws IOException {
+//        return service.write(rpi);
+//    }
 
     @RequestMapping("/reproducible")
     public List<DetailTable> reproducible(@RequestBody ArgsModel argsModel) throws IOException {

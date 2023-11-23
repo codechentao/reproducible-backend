@@ -32,8 +32,12 @@ public class EsConfig {
             HttpHost host = new HttpHost(ConstantUtils.HOST_IP, ConstantUtils.HOST_PORT, ConstantUtils.HOST_SCHEME);
             RestClientBuilder builder = RestClient.builder(host);
             CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+
+            logger.info("User: {}", ConstantUtils.HOST_USER);
+            logger.info("Password: {}", ConstantUtils.HOST_PASSWORD);
+
             credentialsProvider.setCredentials(
-                AuthScope.ANY, new UsernamePasswordCredentials(ConstantUtils.HOST_USER, ConstantUtils.HOST_PASSWORD));
+                    AuthScope.ANY, new UsernamePasswordCredentials(ConstantUtils.HOST_USER, ConstantUtils.HOST_PASSWORD));
             builder.setHttpClientConfigCallback(f -> {
                 f.setDefaultCredentialsProvider(credentialsProvider);
                 f.setKeepAliveStrategy((response, context) -> 1000 * 60);

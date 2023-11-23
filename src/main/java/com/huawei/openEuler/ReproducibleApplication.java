@@ -22,6 +22,4 @@ public class ReproducibleApplication {
         SpringApplication.run(ReproducibleApplication.class, args);
         logger.debug("reproducible project start");
     }
-
-
 }
